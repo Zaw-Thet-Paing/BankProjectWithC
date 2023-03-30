@@ -1,0 +1,3 @@
+/home/deadlok/Documents/CLion/BankProjectWithC/cmake-build-debug/CMakeFiles/BankProjectWithC.dir
+/home/deadlok/Documents/CLion/BankProjectWithC/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/deadlok/Documents/CLion/BankProjectWithC/cmake-build-debug/CMakeFiles/rebuild_cache.dir
