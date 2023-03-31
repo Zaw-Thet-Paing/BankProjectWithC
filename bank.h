@@ -188,7 +188,11 @@ void profile(int userIndex){
 
     //update info and account type
     int option = 0;
-    printf("1. Update Info\n2. Update to business Account\n0. Back to user sector\n");
+    printf("1. Update Info\n");
+    if(!str_cmp(db[userIndex].pOrb, "Business")){
+        printf("2. Update to business Account\n");
+    }
+    printf("0. Back to user sector\n");
     printf("Enter your option ::> ");
     scanf("%d", &option);
 
@@ -924,7 +928,7 @@ unsigned int get_total_amount_of_same_day(int indexToGet, unsigned int amount_to
         }
 
         unsigned int trans_amount_result = char_to_int(trans_amount);
-        printf("Current Amount Record : %u\n", trans_amount_result);
+//        printf("Current Amount Record : %u\n", trans_amount_result);
 
         //to find #
         for(int j = index_counter; j<current_record_counter; j++){
@@ -939,7 +943,7 @@ unsigned int get_total_amount_of_same_day(int indexToGet, unsigned int amount_to
         trans_day[1] = db[indexToGet].trans[i].note[index_counter+2];
 
         long long int trans_day_result = char_to_int(trans_day);
-        printf("Current Day Record : %d\n\n", trans_day_result);
+//        printf("Current Day Record : %d\n\n", trans_day_result);
 
         if(trans_day_result == current_day_to_TR){
             total_amount_of_same_day += trans_amount_result;
