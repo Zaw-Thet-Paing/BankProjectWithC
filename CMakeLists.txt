@@ -3,4 +3,4 @@ project(BankProjectWithC C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(BankProjectWithC main.c security.h z_library.h bank.h)
+add_executable(BankProjectWithC main.c z_library.h bank.h)

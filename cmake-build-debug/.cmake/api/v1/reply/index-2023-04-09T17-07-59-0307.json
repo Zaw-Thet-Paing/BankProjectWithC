@@ -8,10 +8,10 @@
 		},
 		"paths" : 
 		{
-			"cmake" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/bin/cmake",
-			"cpack" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/bin/cpack",
-			"ctest" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/bin/ctest",
-			"root" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/share/cmake-3.25"
+			"cmake" : "/opt/clion-2023.1/bin/cmake/linux/x64/bin/cmake",
+			"cpack" : "/opt/clion-2023.1/bin/cmake/linux/x64/bin/cpack",
+			"ctest" : "/opt/clion-2023.1/bin/cmake/linux/x64/bin/ctest",
+			"root" : "/opt/clion-2023.1/bin/cmake/linux/x64/share/cmake-3.25"
 		},
 		"version" : 
 		{
@@ -26,7 +26,7 @@
 	"objects" : 
 	[
 		{
-			"jsonFile" : "codemodel-v2-0dcfa0f97ce98b1b1e97.json",
+			"jsonFile" : "codemodel-v2-f64b7f2223468cd4da5c.json",
 			"kind" : "codemodel",
 			"version" : 
 			{
@@ -35,7 +35,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-559587e032ddfef29f31.json",
+			"jsonFile" : "cache-v2-c299e2990e56dc03795d.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cmakeFiles-v1-3b251582ac3bad2ab86c.json",
+			"jsonFile" : "cmakeFiles-v1-817d647fdaa9b069aa36.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -66,7 +66,7 @@
 	{
 		"cache-v2" : 
 		{
-			"jsonFile" : "cache-v2-559587e032ddfef29f31.json",
+			"jsonFile" : "cache-v2-c299e2990e56dc03795d.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -76,7 +76,7 @@
 		},
 		"cmakeFiles-v1" : 
 		{
-			"jsonFile" : "cmakeFiles-v1-3b251582ac3bad2ab86c.json",
+			"jsonFile" : "cmakeFiles-v1-817d647fdaa9b069aa36.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -86,7 +86,7 @@
 		},
 		"codemodel-v2" : 
 		{
-			"jsonFile" : "codemodel-v2-0dcfa0f97ce98b1b1e97.json",
+			"jsonFile" : "codemodel-v2-f64b7f2223468cd4da5c.json",
 			"kind" : "codemodel",
 			"version" : 
 			{

@@ -13,7 +13,7 @@
 #define NRC_DB_SIZE 2
 
 struct history{
-    char note[100];
+    char note[100]; //transaction (Transfer and Receive)
 };
 
 struct data{
@@ -66,6 +66,8 @@ void profile_update_to_business_user(int userIndex);
 void transfer_money(int userIndex);
 void continue_to_transfer(int userIndex);
 void transaction_record(int userIndex, int receiverIndex, char who, unsigned int amount);
+void withdraw_money(int userIndex);
+void withdraw_money_record(int userIndex, unsigned int amount);
 void cash_in(int userIndex);
 void trans_history(int userIndex);
 void load_data_to_nrc_db();
@@ -74,6 +76,7 @@ void int_to_char(long long int num);
 long long int char_to_int(char str[100]);
 void get_current_data_to_TR(unsigned int current_amount);
 unsigned int get_total_amount_of_same_day(int indexToGet, unsigned int amount_to_TR);
+int check_input(char input[2]);
 //validation functions
 int email_validation(char email[50]);
 int phone_validation(long long int phone);
@@ -129,27 +132,33 @@ void login(){
 
 void user_sector(int userIndex){
     int option = 0;
+    char input[2];
     printf("***************\n");
     printf("**User Sector**\n");
     printf("***************\n");
     printf("Welcome %s! Your current balance is %u.\n", db[userIndex].name, db[userIndex].amount);
-    printf("1. Profile\n2. Transfer Money\n3. Cash In\n4. History\n0. Exit\n");
+    printf("1. Profile\n2. Transfer Money\n3. Withdraw\n4. Cash In\n5. History\n0. Exit\n");
     printf("Enter your option ::> ");
-    scanf("%d", &option);
+    scanf(" %[^\n]", &input[0]);
+    option = check_input(input);
 
     switch (option) {
-        case 1:
+        case 49:
             profile(userIndex);
             break;
-        case 2:
+        case 50:
             transfer_money(userIndex);
             break;
-        case 3:
+        case 51:
+            withdraw_money(userIndex);
+            break;
+        case 52:
             cash_in(userIndex);
             break;
-        case 4:
+        case 53:
             trans_history(userIndex);
-        case 0:
+            break;
+        case 48:
             welcome();
             break;
         default:
@@ -188,20 +197,22 @@ void profile(int userIndex){
 
     //update info and account type
     int option = 0;
+    char input[2];
     printf("1. Update Info\n");
     if(!str_cmp(db[userIndex].pOrb, "Business")){
         printf("2. Update to business Account\n");
     }
     printf("0. Back to user sector\n");
     printf("Enter your option ::> ");
-    scanf("%d", &option);
-
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
     switch (option) {
-        case 1:
+        case 49:
             profile_update_info(userIndex);
-        case 2:
+        case 50:
             profile_update_to_business_user(userIndex);
-        case 0:
+        case 48:
             user_sector(userIndex);
             break;
         default:
@@ -212,6 +223,7 @@ void profile(int userIndex){
 
 void profile_update_info(int userIndex){
     int option = 0;
+    char input[2];
     char uName[50];
     char uEmail[50] = "";
     long long int uPhone = 0;
@@ -222,9 +234,11 @@ void profile_update_info(int userIndex){
     printf("You can only update name, email, phone and password\n");
     printf("1. Update profile\n0. Back to Profile Page\n");
     printf("Enter your option ::> ");
-    scanf("%d", &option);
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
     switch (option) {
-        case 1:
+        case 49:
             printf("Enter your name to update : ");
             scanf(" %[^\n]", uName);
 
@@ -268,7 +282,7 @@ void profile_update_info(int userIndex){
             profile(userIndex);
 
             break;
-        case 0:
+        case 48:
             profile(userIndex);
             break;
         default:
@@ -280,6 +294,7 @@ void profile_update_info(int userIndex){
 
 void profile_update_to_business_user(int userIndex){
     int option = 0;
+    char input[2];
     char bNrc[25] = "";
     char bDob[15];
     char bGender[10];
@@ -290,10 +305,11 @@ void profile_update_to_business_user(int userIndex){
     printf("You need your nrc to update\n");
     printf("1. Continue to update\n0. Back to profile\n");
     printf("Enter your option : ");
-    scanf("%d", &option);
-
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
     switch(option){
-        case 1:
+        case 49:
             printf("Insert your info carefully to update! If something wrong, you can't change it later!\n");
 
             while(!nrc_validation(bNrc)){
@@ -323,7 +339,7 @@ void profile_update_to_business_user(int userIndex){
             profile(userIndex);
 
             break;
-        case 0:
+        case 48:
             profile(userIndex);
             break;
         default:
@@ -335,18 +351,21 @@ void profile_update_to_business_user(int userIndex){
 
 void transfer_money(int userIndex){
     int option = 0;
+    char input[2];
     printf("******************\n");
     printf("**Transfer Money**\n");
     printf("******************\n");
     printf("1. Continue to Transfer\n0. Back to User Sector\n");
     printf("Enter your option : ");
-    scanf("%d", &option);
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
 
     switch(option){
-        case 1:
+        case 49:
             continue_to_transfer(userIndex);
             break;
-        case 0:
+        case 48:
             transfer_money(userIndex);
             break;
         default:
@@ -358,6 +377,7 @@ void transfer_money(int userIndex){
 
 void continue_to_transfer(int userIndex){
     int option = 0;
+    char input[2];
     int receiverIndex = 0;
     unsigned int amountToTransfer = 0;
     char yOrn;
@@ -365,8 +385,10 @@ void continue_to_transfer(int userIndex){
     printf("Your balance is %u. Amount limit per day is %u\n", db[userIndex].amount, db[userIndex].amount_limit_per_day);
     printf("1. Transfer with phone number\n2. Transfer with email (Recommend)\n");
     printf("Enter your option ::> ");
-    scanf("%d", &option);
-    if(option == 1){
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
+    if(option == 49){
 
         //transfer with phone number
         long long int receiver_phone = 0;
@@ -380,7 +402,7 @@ void continue_to_transfer(int userIndex){
         }
         printf("Your receiver info : %s - %s - %lld\n", db[receiverIndex].name, db[receiverIndex].email, db[receiverIndex].phone_number);
 
-    } else if(option == 2){
+    } else if(option == 50){
 
         //transfer with email
         char receiver_email[50] = "";
@@ -478,7 +500,7 @@ void transaction_record(int userIndex, int receiverIndex, char who, unsigned int
 
     if(who == 't'){
         int index_counter = 0;
-        char first_text[15] = "Send_Money_to_";
+        char first_text[16] = "2Send_Money_to_";
         int first_text_counter = str_len(first_text);
         for(int i=0; i<first_text_counter; i++){
             db[userIndex].trans[space_array[userIndex]-13].note[index_counter] = first_text[i];
@@ -522,7 +544,7 @@ void transaction_record(int userIndex, int receiverIndex, char who, unsigned int
     }else{
 
         int index_counter = 0;
-        char first_text[20] = "Receive_Money_from_";
+        char first_text[21] = "2Receive_Money_from_";
         int first_text_counter = str_len(first_text);
         for(int i=0; i<first_text_counter; i++){
             db[receiverIndex].trans[space_array[receiverIndex]-13].note[index_counter] = first_text[i];
@@ -568,15 +590,101 @@ void transaction_record(int userIndex, int receiverIndex, char who, unsigned int
     }
 }
 
+void withdraw_money(int userIndex){
+    printf("********************\n");
+    printf("***Withdraw Money***\n");
+    printf("********************\n");
+    int option = 0;
+    char input[2];
+    printf("1. Continue to Withdraw\n0. Back to user sector\n");
+    printf("Enter your option ::> ");
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
+
+    if(option == 49){
+
+        int flag = 1;
+        unsigned int amount_to_withdraw = 0;
+
+        while(flag){
+            printf("Enter your amount to withdraw : ");
+            scanf("%u", &amount_to_withdraw);
+            if(amount_to_withdraw > (db[userIndex].amount - 1000)){
+                printf("You don't have enough balance! You need to left 1000. You can withdraw at most %u\n",(db[userIndex].amount - 1000));
+                flag = 1;
+            }else{
+                flag = 0;
+            }
+        }
+
+        printf("Withdraw Success!\n");
+        withdraw_money_record(userIndex, amount_to_withdraw);
+        withdraw_money(userIndex);
+
+    }else if(option == 48){
+        user_sector(userIndex);
+    }else{
+        printf("Invalid Option!\n");
+        withdraw_money(userIndex);
+    }
+
+}
+
+void withdraw_money_record(int userIndex, unsigned int amount){
+
+    for(int i = 0; i<100; i++){
+        int_to_char_result[i] = '\0';
+    }
+
+    int_to_char(amount);
+    int amount_counter = str_len(int_to_char_result);
+
+    int index_counter = 0;
+
+    char first_text[20] = "3Withdraw_$";
+    int first_text_counter = str_len(first_text);
+    for(int i = 0; i< first_text_counter; i++){
+        db[userIndex].trans[space_array[userIndex]-13].note[index_counter] = first_text[i];
+        index_counter++;
+    }
+
+    for(int i = 0; i < amount_counter; i++){
+        db[userIndex].trans[space_array[userIndex]-13].note[index_counter] = int_to_char_result[i];
+        index_counter++;
+    }
+
+    char second_text[10] = "_at_";
+    int second_text_counter = str_len(second_text);
+    for(int i = 0; i< second_text_counter; i++){
+        db[userIndex].trans[space_array[userIndex]-13].note[index_counter] = second_text[i];
+        index_counter++;
+    }
+
+    //time
+    get_time();
+    for(int i = 0; i< str_len(Ctime[0].c_time); i++){
+        db[userIndex].trans[space_array[userIndex]-13].note[index_counter] = Ctime[0].c_time[i];
+        index_counter++;
+    }
+
+    space_array[userIndex]++;
+    db[userIndex].amount -= amount;
+
+}
+
 void cash_in(int userIndex){
     printf("***********\n");
     printf("**Cash In**\n");
     printf("***********\n");
     int option = 0;
+    char input[2];
     printf("1. Continue to Cash In\n0. Back to user sector\n");
     printf("Enter your option ::> ");
-    scanf("%d", &option);
-    if(option == 1){
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
+    if(option == 49){
 
         int check = 1;
         unsigned int cash_in_amount = 0;
@@ -596,7 +704,7 @@ void cash_in(int userIndex){
         printf("Cash In %u Success!\n", cash_in_amount);
         cash_in(userIndex);
 
-    }else if(option == 0){
+    }else if(option == 48){
         user_sector(userIndex);
     }else{
         printf("Invalid Option!\n");
@@ -608,17 +716,52 @@ void trans_history(int userIndex){
     printf("***********************\n");
     printf("**Transaction History**\n");
     printf("***********************\n");
-    for(int i = (space_array[userIndex]-13)-1; i >= 0; i--){
-        printf("%s\n", db[userIndex].trans[i].note);
-    }
-    if(!db[userIndex].trans[0].note[0]){
-        printf("No transaction record exists!\n");
-    }
+
     int option = 0;
+    char input[2];
+    printf("1. Show all record\n");
+    printf("2. Show Transfer and Received Record\n");
+    printf("3. Show Withdraw Record\n");
     printf("0. Back to user sector\n");
     printf("Enter your option : ");
-    scanf("%d", &option);
-    if(option == 0){
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
+    if(option == 49){
+
+        for(int i = (space_array[userIndex]-13)-1; i >= 0; i--){
+            printf("%s\n", db[userIndex].trans[i].note);
+        }
+        if(!db[userIndex].trans[0].note[0]){
+            printf("No transaction record exists!\n");
+        }
+        trans_history(userIndex);
+
+    }else if(option == 50){
+
+        for(int i = (space_array[userIndex]-13)-1; i >= 0; i--){
+            if(db[userIndex].trans[i].note[0] == '2'){
+                printf("%s\n", db[userIndex].trans[i].note);
+            }
+        }
+        if(!db[userIndex].trans[0].note[0]){
+            printf("No transfer and received record exists!\n");
+        }
+        trans_history(userIndex);
+
+    }else if(option == 51){
+
+        for(int i = (space_array[userIndex]-13)-1; i >= 0; i--){
+            if(db[userIndex].trans[i].note[0] == '3'){
+                printf("%s\n", db[userIndex].trans[i].note);
+            }
+        }
+        if(!db[userIndex].trans[0].note[0]){
+            printf("No withdraw record exists!\n");
+        }
+        trans_history(userIndex);
+
+    }else if(option == 48){
         user_sector(userIndex);
     }else{
         printf("Invalid Option\n");
@@ -702,21 +845,23 @@ void registration(){
 
 void welcome(){
     int option = 0;
+    char input[2];
     printf("#####################\n");
     printf("##Welcome From Bank##\n");
     printf("#####################\n\n");
     printf("1. Login\n2. Register\n0. Exit\n");
     printf("Enter your option ::> ");
-    scanf("%d", &option);
-
+    scanf(" %[^\n]", &input[0]);
+//    scanf("%d", &option);
+    option = check_input(input);
     switch (option) {
-        case 1:
+        case 49:
             login();
             break;
-        case 2:
+        case 50:
             registration();
             break;
-        case 0:
+        case 48:
             recording_all_data_to_file();
             printf("Thanks for Using Our Bank :-)\n");
             exit(0);
@@ -882,7 +1027,7 @@ void get_current_data_to_TR(unsigned int current_amount){
     current_day_to_TR = current_day_result;
     current_amount_to_TR = current_amount;
 
-    printf("Current data to TR : %d | %u\n", current_day_to_TR, current_amount_to_TR);
+//    printf("Current data to TR : %d | %u\n", current_day_to_TR, current_amount_to_TR);
 }
 
 unsigned int get_total_amount_of_same_day(int indexToGet, unsigned int amount_to_TR){
@@ -900,55 +1045,59 @@ unsigned int get_total_amount_of_same_day(int indexToGet, unsigned int amount_to
     int index_counter = 0;
 
     for(int i = (record_counter-1); i >= 0; i--){
-        int current_record_counter = str_len(db[indexToGet].trans[i].note);
 
-        //to find $
-        for(int j = 0; j<current_record_counter; j++){
-            if(db[indexToGet].trans[i].note[j] == '$'){
-                break;
+        if(db[indexToGet].trans[i].note[0] == '2'){
+            int current_record_counter = str_len(db[indexToGet].trans[i].note);
+
+            //to find $
+            for(int j = 0; j<current_record_counter; j++){
+                if(db[indexToGet].trans[i].note[j] == '$'){
+                    break;
+                }
+                index_counter++;
+            }
+            amount_counter = 0;
+            for(int j = index_counter; j<current_record_counter; j++){
+                if(db[indexToGet].trans[i].note[j] == '_'){
+                    break;
+                }
+                amount_counter++;
             }
             index_counter++;
-        }
-        amount_counter = 0;
-        for(int j = index_counter; j<current_record_counter; j++){
-            if(db[indexToGet].trans[i].note[j] == '_'){
-                break;
+            for(int a = 0; a<10; a++){
+                trans_amount[a] = '\0';
             }
-            amount_counter++;
-        }
-        index_counter++;
-        for(int a = 0; a<10; a++){
-            trans_amount[a] = '\0';
-        }
 
-        //put amount to trans_amount
-        for(int j = 0; j<amount_counter-1; j++){
-            trans_amount[j] = db[indexToGet].trans[i].note[index_counter];
-            index_counter++;
-        }
+            //put amount to trans_amount
+            for(int j = 0; j<amount_counter-1; j++){
+                trans_amount[j] = db[indexToGet].trans[i].note[index_counter];
+                index_counter++;
+            }
 
-        unsigned int trans_amount_result = char_to_int(trans_amount);
+            unsigned int trans_amount_result = char_to_int(trans_amount);
 //        printf("Current Amount Record : %u\n", trans_amount_result);
 
-        //to find #
-        for(int j = index_counter; j<current_record_counter; j++){
-            if(db[indexToGet].trans[i].note[j] == '#'){
-                break;
+            //to find #
+            for(int j = index_counter; j<current_record_counter; j++){
+                if(db[indexToGet].trans[i].note[j] == '#'){
+                    break;
+                }
+                index_counter++;
             }
-            index_counter++;
-        }
 
-        //put day to trans_day
-        trans_day[0] = db[indexToGet].trans[i].note[index_counter+1];
-        trans_day[1] = db[indexToGet].trans[i].note[index_counter+2];
+            //put day to trans_day
+            trans_day[0] = db[indexToGet].trans[i].note[index_counter+1];
+            trans_day[1] = db[indexToGet].trans[i].note[index_counter+2];
 
-        long long int trans_day_result = char_to_int(trans_day);
+            long long int trans_day_result = char_to_int(trans_day);
 //        printf("Current Day Record : %d\n\n", trans_day_result);
 
-        if(trans_day_result == current_day_to_TR){
-            total_amount_of_same_day += trans_amount_result;
+            if(trans_day_result == current_day_to_TR){
+                total_amount_of_same_day += trans_amount_result;
+            }
+            index_counter = 0;
         }
-        index_counter = 0;
+
     }
 
 
@@ -1115,6 +1264,15 @@ long long int char_to_int(char str[100]){
     fclose(fptr2);
 
     return data;
+}
+
+//ascii value 0=48 , 9=57
+int check_input(char input[2]){
+    if( input[0]>=48 &&input[0]<= 57 && input[1]=='\0'){
+        return input[0];
+    } else{
+        return -1;
+    }
 }
 
 #endif //BANKPROJECTWITHC_BANK_H

@@ -151,7 +151,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/bin/cmake"
+			"value" : "/opt/clion-2023.1/bin/cmake/linux/x64/bin/cmake"
 		},
 		{
 			"name" : "CMAKE_CPACK_COMMAND",
@@ -163,7 +163,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/bin/cpack"
+			"value" : "/opt/clion-2023.1/bin/cmake/linux/x64/bin/cpack"
 		},
 		{
 			"name" : "CMAKE_CTEST_COMMAND",
@@ -175,7 +175,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/bin/ctest"
+			"value" : "/opt/clion-2023.1/bin/cmake/linux/x64/bin/ctest"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER",
@@ -563,7 +563,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/home/deadlok/clion-2023.1/bin/ninja/linux/x64/ninja"
+			"value" : "/opt/clion-2023.1/bin/ninja/linux/x64/ninja"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -795,7 +795,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/deadlok/clion-2023.1/bin/cmake/linux/x64/share/cmake-3.25"
+			"value" : "/opt/clion-2023.1/bin/cmake/linux/x64/share/cmake-3.25"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
